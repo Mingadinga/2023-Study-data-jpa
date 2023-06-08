@@ -10,7 +10,7 @@ import lombok.*;
 @Getter @Setter
 @ToString(of = {"id", "username", "age"}) // 연관관계 필드 참조시 무한루프
 @NamedEntityGraph(name = "Member.all", attributeNodes = @NamedAttributeNode("team"))
-public class Member {
+public class Member extends BaseEntity {
 
     @Id @GeneratedValue
     private Long id;

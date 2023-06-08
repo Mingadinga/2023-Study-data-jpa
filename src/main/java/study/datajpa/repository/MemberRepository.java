@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 //@Repository // 스프링 데이터 jpa가 스캔해줌
-public interface MemberRepository extends JpaRepository<Member, Long> {
+public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom {
     List<Member> findByUsernameAndAgeGreaterThan(String username, int age);
 
     List<Member> findListByUsername(String name); // 컬렉션
@@ -50,19 +50,19 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     List<Member> findMemberFetchJoin();
 
     @EntityGraph(attributePaths = {"team"}) // 페치조인으로 한방에 가져올 연관관계 필드
-    List<Member> findByUserName();
+    List<Member> findByUsername(String username);
 
     @EntityGraph(attributePaths = {"team"})
     @Query("select m from Member m")
     List<Member> findMemberEntityGraph();
 
     @EntityGraph("Member.all")
-    List<Member> fineEntityGraphByUsername(@Param("username") String username);
+    List<Member> findEntityGraphByUsername(@Param("username") String username);
 
     @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
     Member findReadOnlyByUsername(String username);
 
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
-    List<Member> findByUsername(String username);
+//    @Lock(LockModeType.PESSIMISTIC_WRITE)
+//    List<Member> findByUsername(String username);
 
 }
