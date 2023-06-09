@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 //@Repository // 스프링 데이터 jpa가 스캔해줌
-public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom {
+public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom, JpaSpecificationExecutor<Member> {
     List<Member> findByUsernameAndAgeGreaterThan(String username, int age);
 
     List<Member> findListByUsername(String name); // 컬렉션
@@ -64,5 +64,7 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberRep
 
 //    @Lock(LockModeType.PESSIMISTIC_WRITE)
 //    List<Member> findByUsername(String username);
+
+    List<UsernameOnly> findProjectionsByUsername(String username);
 
 }
